@@ -1,6 +1,10 @@
-import e from 'express';
 import express from 'express';
+import userRoute from './user.route.js';
 
-const routes = express.Router();
 
-export default routes;
+const router = express.Router();
+
+// Mount user-related routes (includes health check)
+router.use('/user', userRoute);
+
+export default router;
