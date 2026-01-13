@@ -1,0 +1,185 @@
+{
+  "info": {
+    "name": "Backend Auth CRUD API",
+    "description": "API collection for backend authentication and CRUD operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "GET /v1/user/health-check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/user/health-check",
+            "description": "Health check endpoint for user routes"
+          }
+        },
+        {
+          "name": "POST /v1/user/register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/v1/user/register",
+            "description": "Register a new user"
+          }
+        },
+        {
+          "name": "POST /v1/user/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/v1/user/login",
+            "description": "Login user"
+          }
+        },
+        {
+          "name": "GET /v1/user/profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/user/profile",
+            "description": "Get authenticated user profile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Note",
+      "item": [
+        {
+          "name": "GET /v1/note/health-check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/note/health-check",
+            "description": "Health check endpoint for note routes"
+          }
+        },
+        {
+          "name": "POST /v1/note",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/v1/note",
+            "description": "Create a new note"
+          }
+        },
+        {
+          "name": "GET /v1/note",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/note",
+            "description": "Get all notes"
+          }
+        },
+        {
+          "name": "GET /v1/note/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/note/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "note", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Note ID"
+                }
+              ]
+            },
+            "description": "Get note by ID"
+          }
+        },
+        {
+          "name": "PUT /v1/note/:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/note/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "note", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Note ID"
+                }
+              ]
+            },
+            "description": "Update note by ID"
+          }
+        },
+        {
+          "name": "DELETE /v1/note/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/note/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "note", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Note ID"
+                }
+              ]
+            },
+            "description": "Delete note by ID"
+          }
+        }
+      ]
+    }
+  ]
+}

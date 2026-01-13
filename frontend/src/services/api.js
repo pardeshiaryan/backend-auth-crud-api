@@ -1,13 +1,18 @@
-const API_URL = 'http://localhost:3000/v1/user';
+
+
+//import from env 
+
+const API_URL = import.meta.env.VITE_API_URL;
+const NOTES_API_URL = import.meta.env.VITE_NOTES_API_URL
 
 export const api = {
-  register: async (name, email, password) => {
+  register: async (name, email, password, role = 'user') => {
     const response = await fetch(`${API_URL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, role }),
     });
     return response.json();
   },
@@ -26,6 +31,66 @@ export const api = {
   getProfile: async (token) => {
     const response = await fetch(`${API_URL}/profile`, {
       method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.json();
+  },
+};
+
+// Notes API
+export const notesApi = {
+  createNote: async (token, title, content, status = 'pending') => {
+    const response = await fetch(`${NOTES_API_URL}/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, content, status }),
+    });
+    return response.json();
+  },
+
+  getNotes: async (token) => {
+    const response = await fetch(`${NOTES_API_URL}/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.json();
+  },
+
+  getNoteById: async (token, id) => {
+    const response = await fetch(`${NOTES_API_URL}/${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.json();
+  },
+
+  updateNote: async (token, id, title, content, status) => {
+    const response = await fetch(`${NOTES_API_URL}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, content, status }),
+    });
+    return response.json();
+  },
+
+  deleteNote: async (token, id) => {
+    const response = await fetch(`${NOTES_API_URL}/${id}`, {
+      method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

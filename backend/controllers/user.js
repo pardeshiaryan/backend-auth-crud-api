@@ -8,13 +8,14 @@ import { generateToken } from "../utils/jwt.js";
 export const registerUser = async (req, res) => {
     try {
 
-        const { name,email, password } = req.body;
-        console.log('Registering user:', name, email);
+        const { name, email, password, role = 'user' } = req.body;
+        console.log('Registering user:', name, email, 'with role:', role);
         const hashedPassword = await hashPassword(password);
         const newUser = new User({
             name: name,
             email: email,
             password: hashedPassword,
+            role: role,
         });
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully' });

@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Profile from './components/Profile';
+import Notes from './components/Notes';
 import { auth } from './services/api';
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const [currentPage, setCurrentPage] = useState('login');
-
+  const [currentPage, setCurrentPage] = useState('home');
   useEffect(() => {
     const token = auth.getToken();
     const storedUser = auth.getUser();
     if (token && storedUser) {
       setIsAuthenticated(true);
       setUser(storedUser);
-      setCurrentPage('profile');
+      setCurrentPage('notes');
+
     }
   }, []);
 
@@ -25,7 +25,8 @@ function App() {
     auth.setUser(userData);
     setIsAuthenticated(true);
     setUser(userData);
-    setCurrentPage('profile');
+    setCurrentPage('notes');
+  
   };
 
   const handleRegisterSuccess = () => {
@@ -36,27 +37,30 @@ function App() {
     auth.logout();
     setIsAuthenticated(false);
     setUser(null);
+    setCurrentPage('home');
+  };
+
+  const handleStartClick = () => {
     setCurrentPage('login');
   };
 
   return (
     <div className="app">
-      <nav className="navbar">
-        <h1>Auth App</h1>
-        {isAuthenticated && (
+      {isAuthenticated && (
+        <nav className="navbar">
+          <h1>NoteApp</h1>
           <div className="nav-right">
             <span>Welcome, {user?.name}</span>
-            <button onClick={handleLogout} className="logout-btn">
-              Logout
-            </button>
           </div>
-        )}
-      </nav>
+        </nav>
+      )}
 
       <main className="main-content">
-        {isAuthenticated ? (
-          <Profile user={user} />
-        ) : (
+        {currentPage === 'home' && (
+          <Home onStartClick={handleStartClick} />
+        )}
+
+        {currentPage === 'login' && (
           <>
             <div className="auth-container">
               <div className="auth-tabs">
@@ -72,15 +76,50 @@ function App() {
                 >
                   Register
                 </button>
+                <button
+                  className="tab"
+                  onClick={() => setCurrentPage('home')}
+                >
+                  Back
+                </button>
               </div>
 
-              {currentPage === 'login' ? (
-                <Login onLoginSuccess={handleLoginSuccess} />
-              ) : (
-                <Register onRegisterSuccess={handleRegisterSuccess} />
-              )}
+              <Login onLoginSuccess={handleLoginSuccess} />
             </div>
           </>
+        )}
+
+        {currentPage === 'register' && (
+          <>
+            <div className="auth-container">
+              <div className="auth-tabs">
+                <button
+                  className={`tab ${currentPage === 'login' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('login')}
+                >
+                  Login
+                </button>
+                <button
+                  className={`tab ${currentPage === 'register' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('register')}
+                >
+                  Register
+                </button>
+                <button
+                  className="tab"
+                  onClick={() => setCurrentPage('home')}
+                >
+                  Back
+                </button>
+              </div>
+
+              <Register onRegisterSuccess={handleRegisterSuccess} />
+            </div>
+          </>
+        )}
+
+        {currentPage === 'notes' && isAuthenticated && (
+          <Notes user={user} onLogout={handleLogout} />
         )}
       </main>
     </div>

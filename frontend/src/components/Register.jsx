@@ -6,6 +6,7 @@ export default function Register({ onRegisterSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function Register({ onRegisterSuccess }) {
     setLoading(true);
 
     try {
-      const response = await api.register(name, email, password);
+      const response = await api.register(name, email, password, role);
 
       if (response.message === 'User registered successfully') {
         setSuccess('Registration successful! Redirecting to login...');
@@ -54,6 +55,7 @@ export default function Register({ onRegisterSuccess }) {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
             required
           />
         </div>
@@ -64,6 +66,7 @@ export default function Register({ onRegisterSuccess }) {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
             required
           />
         </div>
@@ -74,6 +77,7 @@ export default function Register({ onRegisterSuccess }) {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
             required
           />
         </div>
@@ -84,8 +88,20 @@ export default function Register({ onRegisterSuccess }) {
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm password"
             required
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="role">Role:</label>
+          <select
+            id="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
         </div>
         <button type="submit" disabled={loading}>
           {loading ? 'Registering...' : 'Register'}
