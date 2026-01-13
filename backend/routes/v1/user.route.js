@@ -13,7 +13,7 @@ userRoute.get('/health-check', (req, res) => {
 userRoute.post('/register', registerUser);
 userRoute.post('/login', loginUser);
 
-// Protected route example
+
 userRoute.get('/profile', authMiddleware, async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('-password');
