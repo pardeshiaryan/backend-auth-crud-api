@@ -385,16 +385,6 @@ The project is built with scalability in mind:
 - Cloudflare for DDoS protection
 - API quota management per user/role
 
-#### 8. **CI/CD Pipeline**
-- GitHub Actions for automated testing and deployment
-- Automated testing on every commit
-- Blue-green deployment strategy
-
-### Performance Considerations
-- Query optimization with lean() for read-only queries
-- Pagination for large datasets
-- Response compression with gzip
-- Client-side caching with appropriate headers
 
 ## 🧪 Testing
 
@@ -490,15 +480,33 @@ git push heroku main
 - Set environment variables
 - Deploy from main branch
 
+## 🌍 Production Deployment
+
+This application is deployed in a production environment with enterprise-grade infrastructure:
+
+- **Backend**: Deployed on Azure Linux VM
+  - Node.js process managed using PM2 for process management and auto-restart
+  - Nginx configured as reverse proxy for load balancing and SSL termination
+  - Always-on backend service with zero downtime deployment capability
+
+- **Frontend**: Deployed on Vercel
+  - Optimized static site hosting with edge network
+  - Automatic HTTPS and global CDN
+  - Instant deployments on every push
+
+- **Database**: Hosted on MongoDB Atlas
+  - Fully managed cloud database with automatic backups
+  - High availability and disaster recovery
+  - Scalable cluster configuration
+
+This setup ensures an always-on backend and reflects real-world production architecture with professional DevOps practices.
+
 ## 📝 Environment Variables Reference
 
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
 | MONGODB_URI | String | - | MongoDB connection string (required) |
 | JWT_SECRET | String | - | Secret key for JWT signing (required) |
-| JWT_EXPIRE | String | 7d | JWT expiration time |
-| PORT | Number | 3000 | Server port |
-| NODE_ENV | String | development | Environment mode |
 
 ## 🎓 Learning Resources
 
@@ -507,17 +515,9 @@ git push heroku main
 - [JWT Authentication](https://jwt.io/)
 - [RESTful API Design](https://restfulapi.net/)
 
-## 📄 License
-
-ISC
-
 ## 👤 Author
 
 Pardeshi Aryan - Backend Developer
-
-## 📧 Contact & Submission
-
-This project has been developed as per the Backend Developer Intern assignment requirements.
 
 **Submission Details:**
 - GitHub Repository: [backend-auth-crud-api](https://github.com/pardeshiaryan/backend-auth-crud-api)
